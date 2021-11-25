@@ -1,0 +1,24 @@
+.field-src {
+  width: 100%;
+}
+
+.section__src {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+table {
+  width: 100%;
+}
+
+.img--congressperson,
+.congressperson__img--congresperson {
+  width: 100px;
+  height: 114px;
+  border-radius: 50%;
+}
+
+.display__congressperson--initials {
+  font-weight: bold;
+}

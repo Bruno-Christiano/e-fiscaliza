@@ -1,0 +1,81 @@
+<div class="container mt-2">
+  <mat-form-field class="field-src" appearance="fill">
+    <mat-label>Digite nome, partido ou sigla estado</mat-label>
+    <input matInput type="text">
+  </mat-form-field>
+
+  <section class="section__src">
+    <div class="example-button-row">
+      <button mat-raised-button color="primary">Pesquisar</button>
+    </div>
+  </section>
+</div>
+<!-- DISPLAY DEPUTADOS -->
+<div class="container mt-4">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Foto</th>
+        <th scope="col">Partido</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Detalhes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let congressperson of congresspersons | slice: (page-1) * pageSize : page * pageSize">
+        <td scope="row">{{ congressperson.nome}}</td>
+        <td> <img [src]="congressperson.urlFoto" class="img--congressperson"
+            alt="Foto do deputado {{ congressperson.nome }}"></td>
+        <td class="display__congressperson--initials">{{congressperson.siglaPartido}}</td>
+        <td>{{ congressperson.siglaUf }}</td>
+        <td>
+          <div class="example-button-row">
+            <button (click)="showOneCongresspersonDetails(congressperson.id, modalCongresspersonDetails)"
+              mat-raised-button color="primary">Detalhes</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- paginação -->
+  <ngb-pagination [maxSize]="10" [(page)]="page" [pageSize]="pageSize" [collectionSize]="totalLength"></ngb-pagination>
+</div>
+
+<!-- modal details -->
+<ng-template #modalCongresspersonDetails>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Perfil Completo</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="congresspersonn--main">
+      <div class="congressperson__img">
+        <img class="congressperson__img--congresperson" [src]="congresspersonDetails.photo" alt="">
+      </div>
+      <div class="congressperson__description">
+        <p class="congressperson__description--title">Nome Civil:</p>
+        <h3>{{congresspersonDetails.nameCivil}}</h3>
+        <p class="congressperson__description--title">Partido:</p>
+        <h3>{{congresspersonDetails.initialsPoliticalParty}}</h3>
+        <p class="congressperson__description--title">Estado:</p>
+        <h3>{{congresspersonDetails.state}}</h3>
+        <p class="congressperson__description--title">Data de Nascimento:</p>
+        <h3>{{congresspersonDetails.birhtDate}}</h3>
+        <p class="congressperson__description--title">Gênero</p>
+        <h3>{{congresspersonDetails.gender}}</h3>
+        <p class="congressperson__description--title">Email</p>
+        <h3>{{congresspersonDetails.email}}</h3>
+        <p class="congressperson__description--title">Escolaridade</p>
+        <h3>{{congresspersonDetails.schooling}}</h3>
+        <p class="congressperson__description--title">Site</p>
+        <h3 *ngIf="congresspersonDetails.webSite !=null ? '' : 'Não Possui' ">{{ congresspersonDetails.webSite }}
+        </h3>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
